@@ -1,8 +1,10 @@
 ﻿@page "/"
+@using System.Timers;
+@implements IDisposable;
 
 <h1>Rock, Paper and Scissors</h1>
 
-<button>Play again</button>
+<button class="btn btn-info">Play again</button>
 
 <div style="display: flex; justify-content: center; margin-bottom:20px;">
     <img src="./paper.jpg" class="image" />
@@ -13,3 +15,29 @@
     <img src="./rock.jpg" class="image selectable-image" />
     <img src="./scissors.jpg" class="image selectable-image" />
 </div>
+
+@code{
+    Timer timer;
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer();
+        timer.Interval = 500;
+        timer.Elapsed += TimerOnElapsed;
+        timer.Start();
+
+    }
+
+    private void TimerOnElapsed(object sender, ElapsedEventArgs e)
+    {
+
+    }
+
+    public void Dispose()
+    {
+        if(timer!= null)
+        {
+            timer.Dispose();
+        }
+    }
+}
